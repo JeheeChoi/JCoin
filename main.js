@@ -77,11 +77,11 @@ let jCoin = new Blockchain()
 jCoin.addBlock(new Block(1, "03/02/2021", { amount: 3 }))
 jCoin.addBlock(new Block(2, "03/03/2021", { amount: 6 }))
 
-// console.log(JSON.stringify(jCoin, null, 4))
+console.log(JSON.stringify(jCoin, null, 4))
 
 // Test out if the chain is valid
 
-// console.log('Is blockchain valid? ' + jCoin.isChainValid())
+console.log('Is blockchain valid? ' + jCoin.isChainValid())
 // Try to tamper by overwriting the data
 jCoin.chain[1].data = { amound: 100 }
 // trying to calculate the hash again
