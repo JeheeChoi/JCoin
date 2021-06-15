@@ -22,6 +22,28 @@ class Block{
     // and then take the output of sha256 as a string
     return SHA256(this.index + this.previousHash + this.timestamp + JSON.stringify(this.data)).toString()
   }
+  // a method to create a transaction compute its hash and add it to an array
+  // "Proof of work" and "Mining"
+  // Bitcoin requires the hash of a block to begin with certain amount of zeros
+  // because you can't influence the output of a hash function,
+  // you have to try a lot of combinations and get the hash that has enough numbers of zeros in front of it.
+  // It requires a lot of computing power - it's called "Difficulty"
+  // i.e, Bitcoin aims to create each new block every 10 min
+  // As computers get faster, it'll require less time to mine a new block, the difficulty will be increased
+
+  //a method that takes difficulty as a property
+  mindBlock(difficulty) {
+    //make the hash of JCoin block begin with certain amount of zeros
+    //using while loop to keep looping until the hash starts with enough amount of zeros
+    //that takes a substring of my hash 0 until difficulty(ex) 5)
+    while(this.hash.substring(0, difficulty) !== Array(difficulty + 1).join("0")) {
+      //calculate the hash of this block
+      this.hash = this.calculateHash()
+    }
+
+    console.log("Block mined: " + this.hash)
+
+  }
 }
 
 class Blockchain{
