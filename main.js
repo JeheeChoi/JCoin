@@ -56,6 +56,8 @@ class Blockchain{
   constructor(){
     // array of blocks
     this.chain = [this.createGenesisBlock()]
+    // set difficulty
+    this.difficulty = 2
   }
 
   // Add first block of blockchain(Genesis block) method
@@ -70,8 +72,10 @@ class Blockchain{
   addBlock(newBlock){
     // First, set the previous hash property of the new block as a lastest block
     newBlock.previousHash = this.getLatestBlock().hash
-    // recalculate its hash
-    newBlock.hash = newBlock.calculateHash()
+    // // recalculate its hash
+    // newBlock.hash = newBlock.calculateHash()
+    newBlock.mineBlock(this.difficulty)
+
     // then push it on to the chain
     this.chain.push(newBlock)
   }
@@ -101,16 +105,20 @@ class Blockchain{
 // Test out my Blockchain
 
 let jCoin = new Blockchain()
+
+console.log('Mining block 1...')
 jCoin.addBlock(new Block(1, "03/02/2021", { amount: 3 }))
+
+console.log('Mining block 2...')
 jCoin.addBlock(new Block(2, "03/03/2021", { amount: 6 }))
 
-console.log(JSON.stringify(jCoin, null, 4))
+// console.log(JSON.stringify(jCoin, null, 4))
 
-// Test out if the chain is valid
+// // Test out if the chain is valid
 
-console.log('Is blockchain valid? ' + jCoin.isChainValid())
-// Try to tamper by overwriting the data
-jCoin.chain[1].data = { amound: 100 }
-// trying to calculate the hash again
-jCoin.chain[1].hash = jCoin.chain[1].calculateHash()
-console.log('Is blockchain valid? ' + jCoin.isChainValid())
+// console.log('Is blockchain valid? ' + jCoin.isChainValid())
+// // Try to tamper by overwriting the data
+// jCoin.chain[1].data = { amound: 100 }
+// // trying to calculate the hash again
+// jCoin.chain[1].hash = jCoin.chain[1].calculateHash()
+// console.log('Is blockchain valid? ' + jCoin.isChainValid())
