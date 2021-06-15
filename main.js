@@ -13,6 +13,8 @@ class Block{
     this.previousHash = previousHash
     // add another property of this "hash" which contains the hash of our block
     this.hash = this.calculateHash()
+    // nonce - random number to find block hash that's lower than current target
+    this.nonce = 0
   }
   // a method to calculate the hash of the block
   // it takes the properties of the block, run them through the hash function
@@ -20,10 +22,10 @@ class Block{
   calculateHash() {
     // calculate hash and return the hash of index + previousHash + timeStamp + data object
     // and then take the output of sha256 as a string
-    return SHA256(this.index + this.previousHash + this.timestamp + JSON.stringify(this.data)).toString()
+    return SHA256(this.index + this.previousHash + this.timestamp + JSON.stringify(this.data) + this.nonce).toString()
   }
   // a method to create a transaction compute its hash and add it to an array
-  // "Proof of work" and "Mining"
+  // "Proof of work," aka "Mining"
   // Bitcoin requires the hash of a block to begin with certain amount of zeros
   // because you can't influence the output of a hash function,
   // you have to try a lot of combinations and get the hash that has enough numbers of zeros in front of it.
@@ -32,11 +34,14 @@ class Block{
   // As computers get faster, it'll require less time to mine a new block, the difficulty will be increased
 
   //a method that takes difficulty as a property
-  mindBlock(difficulty) {
+  mineBlock(difficulty) {
     //make the hash of JCoin block begin with certain amount of zeros
     //using while loop to keep looping until the hash starts with enough amount of zeros
     //that takes a substring of my hash 0 until difficulty(ex) 5)
     while(this.hash.substring(0, difficulty) !== Array(difficulty + 1).join("0")) {
+      // increase the number of the nonce
+      this.nonce++
+
       //calculate the hash of this block
       this.hash = this.calculateHash()
     }
