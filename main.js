@@ -24,6 +24,7 @@ class Block{
     // and then take the output of sha256 as a string
     return SHA256(this.index + this.previousHash + this.timestamp + JSON.stringify(this.data) + this.nonce).toString()
   }
+
   // a method to create a transaction compute its hash and add it to an array
   // "Proof of work," aka "Mining"
   // Bitcoin requires the hash of a block to begin with certain amount of zeros
