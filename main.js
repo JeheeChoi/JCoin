@@ -1,6 +1,14 @@
 // import sha-256 function
 const SHA256 = require('crypto-js/sha256')
 
+// define transaction
+class Transaction{
+  constructor(fromAddress, toAddress, amount){
+    this.fromAddress = fromAddress
+    this.toAddress = toAddress
+    this.amount = amount
+  }
+}
 class Block{
   // index - tells where this block positions in the chain
   // timestamp - tells when the block was created
@@ -60,7 +68,13 @@ class Blockchain{
     this.chain = [this.createGenesisBlock()]
     // set difficulty
     this.difficulty = 2
-  }
+    // add a mining reward, a place to store pending transactions, a new method to mine a new block
+    // pending transaction - In Bitcoin, the POW algorithm makes sure that every block is created every 10 min,
+    // all the transactions that are made in between blocks are temporarily stored in the pending transactions array
+    // and it can be added to the next block.
+    this.pendingTransactions = []
+    this.miningReward = 10
+
 
   // Add first block of blockchain(Genesis block) method
   createGenesisBlock(){
