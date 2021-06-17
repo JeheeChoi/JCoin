@@ -113,6 +113,33 @@ class Blockchain{
       new Transaction(null, miningRewardAddress, this.miningReward)
     ]
   }
+  // add the transaction to pending transactions array
+  createTransaction(transaction){
+    this.pendingTransactions.push(transaction)
+  }
+
+  // check the balance of the coin
+  getBalanceOfAddress(address){
+    let balance = 0
+    // loop over all the blocks of the blockchain
+    for(const block of this.chain){
+      // loop over all the transactions of each block
+      for(const trans of block.transactions){
+        // if the address is the sender's address,
+        if(trans.fromAddress === address){
+          // reduce the amount from the balance
+          balance -= trans.amount
+        }
+        // if the address is the receiver's address,
+        if(trans.toAddress === address){
+          // add the amount to the balance
+          balance += trans.amount
+        }
+      }
+    }
+
+    return balance
+  }
 
   // check if the chain is valid
   isChainValid(){
