@@ -6,10 +6,11 @@ class Block{
   // timestamp - tells when the block was created
   // data - information of data, amount, sender, receiver, etc
   // previousHash - a string that contains the hash of the previous block
-  constructor(index, timestamp, data, previousHash = ''){
-    this.index = index
+  constructor(timestamp, transactions, previousHash = ''){
+    // this.index = index
     this.timestamp = timestamp
-    this.data = data
+    // this.data = data
+    this.transactions = transactions
     this.previousHash = previousHash
     // add another property of this "hash" which contains the hash of our block
     this.hash = this.calculateHash()
@@ -63,7 +64,7 @@ class Blockchain{
 
   // Add first block of blockchain(Genesis block) method
   createGenesisBlock(){
-    return new Block(0, "03/01/2021", "Genesis block", "0")
+    return new Block("03/01/2021", "Genesis block", "0")
   }
   // Return the latest block of the chain method
   getLatestBlock(){
@@ -107,11 +108,11 @@ class Blockchain{
 
 let jCoin = new Blockchain()
 
-console.log('Mining block 1...')
-jCoin.addBlock(new Block(1, "03/02/2021", { amount: 3 }))
-
-console.log('Mining block 2...')
-jCoin.addBlock(new Block(2, "03/03/2021", { amount: 6 }))
+// console.log('Mining block 1...')
+// jCoin.addBlock(new Block(1, "03/02/2021", { amount: 3 }))
+//
+// console.log('Mining block 2...')
+// jCoin.addBlock(new Block(2, "03/03/2021", { amount: 6 }))
 
 // console.log(JSON.stringify(jCoin, null, 4))
 
