@@ -74,8 +74,7 @@ class Blockchain{
     // and it can be added to the next block.
     this.pendingTransactions = []
     this.miningReward = 10
-
-
+  }
   // Add first block of blockchain(Genesis block) method
   createGenesisBlock(){
     return new Block("03/01/2021", "Genesis block", "0")
@@ -84,17 +83,37 @@ class Blockchain{
   getLatestBlock(){
     return this.chain[this.chain.length - 1]
   }
-  // Add a new block to the chain
-  addBlock(newBlock){
-    // First, set the previous hash property of the new block as a lastest block
-    newBlock.previousHash = this.getLatestBlock().hash
-    // // recalculate its hash
-    // newBlock.hash = newBlock.calculateHash()
-    newBlock.mineBlock(this.difficulty)
+  // // Add a new block to the chain
+  // addBlock(newBlock){
+  //   // First, set the previous hash property of the new block as a lastest block
+  //   newBlock.previousHash = this.getLatestBlock().hash
+  //   // // recalculate its hash
+  //   // newBlock.hash = newBlock.calculateHash()
+  //   newBlock.mineBlock(this.difficulty)
+  //
+  //   // then push it on to the chain
+  //   this.chain.push(newBlock)
+  // }
 
-    // then push it on to the chain
-    this.chain.push(newBlock)
+  // Add a new mining method instead of using `addBlock`
+  // this method receives mining reward address so that the miner can get the reward to their
+  // wallet when successfully mined the block
+  minePendingTransactions(miningRewardAddress){
+    // first, create a new block
+    let block = new Block(Date.now(), this.pendingTransactions)
+    // mine
+    block.mineBlock(this.difficulty)
+    // print out mining success message
+    console.log('HOORAY!!! Successfully mined a block!!!')
+    // then add this block to the chain
+    this.chain.push(block)
+    // and then reset the pending transactions + create a new transaction to give the miner the reward
+    this.pendingTransactions = [
+      // new Transaction(fromAddress, toAddress, amount)
+      new Transaction(null, miningRewardAddress, this.miningReward)
+    ]
   }
+
   // check if the chain is valid
   isChainValid(){
     // loop over the chain
